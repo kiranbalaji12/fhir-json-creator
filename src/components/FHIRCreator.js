@@ -11,12 +11,18 @@ const FHIRCreator = () => {
   const resourceTypes = [
     'Patient',
     'Practitioner',
+    'PractitionerRole',
     'CareTeam',
     'Organization',
     'Encounter',
+    'Observation',
     'Condition',
+    'Procedure',
+    'DiagnosticReport',
     'Medication',
-    'MedicationRequest'
+    'MedicationRequest',
+    'Immunization',
+    'ExplanationOfBenefit'
   ];
 
   const profiles = {
@@ -51,6 +57,16 @@ const FHIRCreator = () => {
       'davinci-0.1.0': ['id', 'firstName', 'lastName', 'specialization'],
       'davinci-2.1.0': ['id', 'firstName', 'lastName', 'specialization']
     },
+    PractitionerRole: {
+      'fhir-r4': ['id', 'practitioner', 'organization', 'code', 'specialty', 'email', 'phone'],
+      'uscore-3.1.0': ['id', 'practitioner', 'organization', 'code', 'specialty'],
+      'uscore-3.1.1': ['id', 'practitioner', 'organization', 'code', 'specialty'],
+      'uscore-6.1.0': ['id', 'practitioner', 'organization', 'code', 'specialty'],
+      'carin-0.1.0': ['id', 'practitioner', 'organization', 'code'],
+      'carin-2.0.0': ['id', 'practitioner', 'organization', 'code'],
+      'davinci-0.1.0': ['id', 'practitioner', 'organization', 'code'],
+      'davinci-2.1.0': ['id', 'practitioner', 'organization', 'code']
+    },
     CareTeam: {
       'fhir-r4': ['id', 'status', 'name', 'subject', 'note'],
       'uscore-3.1.0': ['id', 'status', 'name', 'subject', 'note'],
@@ -81,6 +97,16 @@ const FHIRCreator = () => {
       'davinci-0.1.0': ['id', 'status', 'type', 'subject'],
       'davinci-2.1.0': ['id', 'status', 'type', 'subject']
     },
+    Observation: {
+      'fhir-r4': ['id', 'status', 'code', 'subject', 'effectiveDate', 'valueQuantity', 'valueCode'],
+      'uscore-3.1.0': ['id', 'status', 'code', 'subject', 'effectiveDate', 'valueQuantity', 'valueCode'],
+      'uscore-3.1.1': ['id', 'status', 'code', 'subject', 'effectiveDate', 'valueQuantity', 'valueCode'],
+      'uscore-6.1.0': ['id', 'status', 'code', 'subject', 'effectiveDate', 'valueQuantity', 'valueCode'],
+      'carin-0.1.0': ['id', 'status', 'code', 'subject'],
+      'carin-2.0.0': ['id', 'status', 'code', 'subject'],
+      'davinci-0.1.0': ['id', 'status', 'code', 'subject'],
+      'davinci-2.1.0': ['id', 'status', 'code', 'subject']
+    },
     Condition: {
       'fhir-r4': ['id', 'clinicalStatus', 'code', 'subject', 'onsetDate'],
       'uscore-3.1.0': ['id', 'clinicalStatus', 'code', 'subject', 'onsetDate'],
@@ -90,6 +116,26 @@ const FHIRCreator = () => {
       'carin-2.0.0': ['id', 'clinicalStatus', 'code', 'subject'],
       'davinci-0.1.0': ['id', 'clinicalStatus', 'code', 'subject'],
       'davinci-2.1.0': ['id', 'clinicalStatus', 'code', 'subject']
+    },
+    Procedure: {
+      'fhir-r4': ['id', 'status', 'code', 'subject', 'performedDate', 'performer'],
+      'uscore-3.1.0': ['id', 'status', 'code', 'subject', 'performedDate', 'performer'],
+      'uscore-3.1.1': ['id', 'status', 'code', 'subject', 'performedDate', 'performer'],
+      'uscore-6.1.0': ['id', 'status', 'code', 'subject', 'performedDate', 'performer'],
+      'carin-0.1.0': ['id', 'status', 'code', 'subject'],
+      'carin-2.0.0': ['id', 'status', 'code', 'subject'],
+      'davinci-0.1.0': ['id', 'status', 'code', 'subject'],
+      'davinci-2.1.0': ['id', 'status', 'code', 'subject']
+    },
+    DiagnosticReport: {
+      'fhir-r4': ['id', 'status', 'code', 'subject', 'effectiveDate', 'issued', 'conclusion'],
+      'uscore-3.1.0': ['id', 'status', 'code', 'subject', 'effectiveDate', 'issued'],
+      'uscore-3.1.1': ['id', 'status', 'code', 'subject', 'effectiveDate', 'issued'],
+      'uscore-6.1.0': ['id', 'status', 'code', 'subject', 'effectiveDate', 'issued'],
+      'carin-0.1.0': ['id', 'status', 'code', 'subject'],
+      'carin-2.0.0': ['id', 'status', 'code', 'subject'],
+      'davinci-0.1.0': ['id', 'status', 'code', 'subject'],
+      'davinci-2.1.0': ['id', 'status', 'code', 'subject']
     },
     Medication: {
       'fhir-r4': ['id', 'code', 'status', 'form'],
@@ -110,6 +156,26 @@ const FHIRCreator = () => {
       'carin-2.0.0': ['id', 'status', 'medication', 'subject'],
       'davinci-0.1.0': ['id', 'status', 'medication', 'subject'],
       'davinci-2.1.0': ['id', 'status', 'medication', 'subject']
+    },
+    Immunization: {
+      'fhir-r4': ['id', 'status', 'vaccineCode', 'patient', 'occurrenceDate', 'performer'],
+      'uscore-3.1.0': ['id', 'status', 'vaccineCode', 'patient', 'occurrenceDate'],
+      'uscore-3.1.1': ['id', 'status', 'vaccineCode', 'patient', 'occurrenceDate'],
+      'uscore-6.1.0': ['id', 'status', 'vaccineCode', 'patient', 'occurrenceDate'],
+      'carin-0.1.0': ['id', 'status', 'vaccineCode', 'patient'],
+      'carin-2.0.0': ['id', 'status', 'vaccineCode', 'patient'],
+      'davinci-0.1.0': ['id', 'status', 'vaccineCode', 'patient'],
+      'davinci-2.1.0': ['id', 'status', 'vaccineCode', 'patient']
+    },
+    ExplanationOfBenefit: {
+      'fhir-r4': ['id', 'status', 'type', 'patient', 'created', 'provider', 'insurer'],
+      'uscore-3.1.0': ['id', 'status', 'type', 'patient', 'created'],
+      'uscore-3.1.1': ['id', 'status', 'type', 'patient', 'created'],
+      'uscore-6.1.0': ['id', 'status', 'type', 'patient', 'created'],
+      'carin-0.1.0': ['id', 'status', 'type', 'patient', 'created'],
+      'carin-2.0.0': ['id', 'status', 'type', 'patient', 'created'],
+      'davinci-0.1.0': ['id', 'status', 'type', 'patient'],
+      'davinci-2.1.0': ['id', 'status', 'type', 'patient', 'created']
     }
   };
 
@@ -122,9 +188,12 @@ const FHIRCreator = () => {
     email: 'Email',
     phone: 'Phone',
     specialization: 'Specialization',
+    practitioner: 'Practitioner ID',
+    organization: 'Organization ID',
     status: 'Status',
     name: 'Name',
     subject: 'Subject',
+    patient: 'Patient ID',
     note: 'Note',
     address: 'Address',
     class: 'Class',
@@ -136,7 +205,19 @@ const FHIRCreator = () => {
     form: 'Form',
     intent: 'Intent',
     medication: 'Medication',
-    dosageInstruction: 'Dosage Instruction'
+    dosageInstruction: 'Dosage Instruction',
+    effectiveDate: 'Effective Date',
+    valueQuantity: 'Value (Quantity)',
+    valueCode: 'Value (Code)',
+    performedDate: 'Performed Date',
+    performer: 'Performer',
+    issued: 'Issued Date',
+    conclusion: 'Conclusion',
+    vaccineCode: 'Vaccine Code',
+    occurrenceDate: 'Occurrence Date',
+    created: 'Created Date',
+    provider: 'Provider ID',
+    insurer: 'Insurer ID'
   };
 
   const generateFHIRJson = () => {
@@ -149,8 +230,6 @@ const FHIRCreator = () => {
     };
 
     const resourceData = { ...baseResource };
-
-    // Add fields based on resource type
     const fields = resourceFields[selectedResource]?.[selectedProfile] || [];
     
     fields.forEach(field => {
@@ -203,11 +282,17 @@ const FHIRCreator = () => {
         break;
       case 'name':
         if (!resource.name) resource.name = [];
-        if (typeof resource.name === 'string') resource.name = value;
-        else resource.name[0] = { text: value };
+        resource.name = [{ text: value }];
         break;
       case 'subject':
-        resource.subject = { reference: `Patient/${value}` };
+      case 'patient':
+        resource[field === 'patient' ? 'patient' : 'subject'] = { reference: `Patient/${value}` };
+        break;
+      case 'practitioner':
+        resource.practitioner = { reference: `Practitioner/${value}` };
+        break;
+      case 'organization':
+        resource.organization = [{ reference: `Organization/${value}` }];
         break;
       case 'address':
         if (!resource.address) resource.address = [];
@@ -220,6 +305,10 @@ const FHIRCreator = () => {
       case 'code':
         resource.code = { coding: [{ system: 'http://snomed.info/sct', code: value }] };
         break;
+      case 'specialty':
+        if (!resource.specialty) resource.specialty = [];
+        resource.specialty.push({ coding: [{ system: 'http://snomed.info/sct', code: value }] });
+        break;
       case 'type':
         if (!resource.type) resource.type = [];
         resource.type.push({ coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v3-ActCode', code: value }] });
@@ -230,18 +319,36 @@ const FHIRCreator = () => {
       case 'period':
         resource.period = { start: value };
         break;
+      case 'effectiveDate':
+        resource.effectiveDateTime = value;
+        break;
+      case 'valueQuantity':
+        resource.valueQuantity = { value: parseFloat(value) || 0, unit: 'unit' };
+        break;
+      case 'valueCode':
+        resource.valueCodeableConcept = { coding: [{ system: 'http://snomed.info/sct', code: value }] };
+        break;
       case 'clinicalStatus':
         resource.clinicalStatus = { coding: [{ system: 'http://terminology.hl7.org/CodeSystem/condition-clinical', code: value }] };
         break;
       case 'onsetDate':
         resource.onsetDateTime = value;
         break;
+      case 'performedDate':
+        resource.performedDateTime = value;
+        break;
+      case 'performer':
+        if (!resource.performer) resource.performer = [];
+        resource.performer.push({ actor: { reference: `Practitioner/${value}` } });
+        break;
+      case 'issued':
+        resource.issued = value;
+        break;
+      case 'conclusion':
+        resource.conclusion = value;
+        break;
       case 'form':
         resource.form = { coding: [{ system: 'http://snomed.info/sct', code: value }] };
-        break;
-      case 'specialization':
-        if (!resource.qualification) resource.qualification = [];
-        resource.qualification.push({ code: { text: value } });
         break;
       case 'intent':
         resource.intent = value;
@@ -252,6 +359,21 @@ const FHIRCreator = () => {
       case 'dosageInstruction':
         if (!resource.dosageInstruction) resource.dosageInstruction = [];
         resource.dosageInstruction.push({ text: value });
+        break;
+      case 'vaccineCode':
+        resource.vaccineCode = { coding: [{ system: 'http://hl7.org/fhir/sid/cvx', code: value }] };
+        break;
+      case 'occurrenceDate':
+        resource.occurrenceDateTime = value;
+        break;
+      case 'created':
+        resource.created = value;
+        break;
+      case 'provider':
+        resource.provider = { reference: `Organization/${value}` };
+        break;
+      case 'insurer':
+        resource.insurer = { reference: `Organization/${value}` };
         break;
       default:
         resource[field] = value;
@@ -358,13 +480,6 @@ const FHIRCreator = () => {
                       <option value="other">Other</option>
                       <option value="unknown">Unknown</option>
                     </select>
-                  ) : field === 'birthDate' || field === 'onsetDate' || field === 'period' ? (
-                    <input 
-                      type="date" 
-                      value={formData[field] || ''} 
-                      onChange={(e) => handleInputChange(field, e.target.value)}
-                      style={styles.input}
-                    />
                   ) : field === 'status' ? (
                     <select 
                       value={formData[field] || ''} 
@@ -377,12 +492,19 @@ const FHIRCreator = () => {
                       <option value="draft">Draft</option>
                       <option value="completed">Completed</option>
                     </select>
-                  ) : field === 'note' || field === 'dosageInstruction' ? (
+                  ) : field === 'birthDate' || field === 'onsetDate' || field === 'period' || field === 'effectiveDate' || field === 'performedDate' || field === 'occurrenceDate' || field === 'issued' || field === 'created' ? (
+                    <input 
+                      type="date" 
+                      value={formData[field] || ''} 
+                      onChange={(e) => handleInputChange(field, e.target.value)}
+                      style={styles.input}
+                    />
+                  ) : field === 'note' || field === 'dosageInstruction' || field === 'conclusion' ? (
                     <textarea 
                       value={formData[field] || ''} 
                       onChange={(e) => handleInputChange(field, e.target.value)}
                       style={{...styles.input, minHeight: '80px', fontFamily: 'monospace'}}
-                      placeholder="Enter note..."
+                      placeholder="Enter text..."
                     />
                   ) : (
                     <input 
