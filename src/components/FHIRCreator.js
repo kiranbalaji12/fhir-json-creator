@@ -1,4 +1,17 @@
 import React, { useState, useRef } from 'react';
+// Add this right above "const FHIRCreator = () => {"
+const PROFILE_RESOURCES = {
+  'fhir-r4': ['Patient', 'Practitioner', 'CareTeam', 'Organization', 'Encounter', 'Condition', 'Medication', 'MedicationRequest','RelatedPerson','Careplan'],
+  'uscore-3.1.0': ['Patient', 'Practitioner', 'CareTeam', 'Organization', 'Encounter', 'Condition', 'Medication', 'MedicationRequest','RelatedPerson','Careplan'],
+  'uscore-3.1.1': ['Patient', 'Practitioner', 'CareTeam', 'Organization', 'Encounter', 'Condition', 'Medication', 'MedicationRequest','RelatedPerson','Careplan'],
+  'uscore-6.1.0': ['Patient', 'Practitioner', 'CareTeam', 'Organization', 'Encounter', 'Condition', 'Medication', 'MedicationRequest','RelatedPerson','Careplan'],
+  
+  // CARIN and DaVinci constraints
+  'carin-0.1.0': ['Patient', 'Practitioner', 'Organization','PractitionerRole','ExplanationOfBenefit','RelatedPerson'],
+  'carin-2.0.0': ['Patient', 'Practitioner', 'Organization','ExplanationOfBenefit','RelatedPerson'],
+  'davinci-0.1.0': ['Patient', 'Practitioner', 'Organization'],
+  'davinci-2.1.0': ['Patient', 'Practitioner', 'Organization']
+};
 
 const FHIRCreator = () => {
   const [selectedResource, setSelectedResource] = useState('Patient');
@@ -12,7 +25,9 @@ const FHIRCreator = () => {
     'Patient',
     'Practitioner',
     'PractitionerRole',
+    'RelatedPerson',
     'CareTeam',
+    'CarePlan',
     'Organization',
     'Encounter',
     'Observation',
@@ -38,8 +53,8 @@ const FHIRCreator = () => {
 
   const resourceFields = {
     Patient: {
-      'fhir-r4': ['id', 'firstName', 'lastName', 'birthDate', 'gender', 'email', 'phone'],
-      'uscore-3.1.0': ['id', 'firstName', 'lastName', 'birthDate', 'gender', 'email', 'phone'],
+      'fhir-r4': ['id', 'identifierSystem', 'identifierValue', 'identifierUse', 'firstName', 'lastName', 'birthDate', 'gender', 'email', 'phone'],
+      'uscore-3.1.0': ['id', 'identifierSystem', 'identifierValue', 'identifierUse', 'firstName', 'lastName', 'birthDate', 'gender', 'email', 'phone'],
       'uscore-3.1.1': ['id', 'firstName', 'lastName', 'birthDate', 'gender', 'email', 'phone'],
       'uscore-6.1.0': ['id', 'firstName', 'lastName', 'birthDate', 'gender', 'email', 'phone'],
       'carin-0.1.0': ['id', 'firstName', 'lastName', 'birthDate', 'gender'],
@@ -63,7 +78,6 @@ const FHIRCreator = () => {
       'uscore-3.1.1': ['id', 'practitioner', 'organization', 'code', 'specialty'],
       'uscore-6.1.0': ['id', 'practitioner', 'organization', 'code', 'specialty'],
       'carin-0.1.0': ['id', 'practitioner', 'organization', 'code'],
-      'carin-2.0.0': ['id', 'practitioner', 'organization', 'code'],
       'davinci-0.1.0': ['id', 'practitioner', 'organization', 'code'],
       'davinci-2.1.0': ['id', 'practitioner', 'organization', 'code']
     },
@@ -77,6 +91,22 @@ const FHIRCreator = () => {
       'davinci-0.1.0': ['id', 'status', 'name', 'subject'],
       'davinci-2.1.0': ['id', 'status', 'name', 'subject']
     },
+    RelatedPerson: {
+    'fhir-r4': ['id', 'patient', 'relationship', 'firstName', 'lastName', 'phone', 'email'],
+    'uscore-3.1.0': ['id', 'patient', 'relationship', 'firstName', 'lastName', 'gender', 'email', 'phone'],
+    'uscore-3.1.1': ['id', 'patient', 'relationship', 'firstName', 'lastName', 'gender', 'email', 'phone'],
+    'uscore-6.1.0': ['id', 'patient', 'relationship', 'firstName', 'lastName', 'gender', 'email', 'phone'],
+    'carin-0.1.0': ['id', 'patient', 'relationship', 'firstName', 'lastName','birthDate', 'gender', 'email', 'phone'],
+    'carin-2.0.0': ['id', 'patient', 'relationship', 'firstName', 'lastName','birthDate', 'gender', 'email', 'phone']
+  },
+  CarePlan: {
+    'fhir-r4': ['id', 'status', 'intent', 'category', 'subject', 'description'],
+    'uscore-3.1.0': ['id', 'status', 'intent', 'category', 'subject', 'description'],
+    'uscore-3.1.1': ['id', 'status', 'intent', 'category', 'subject', 'description'],
+    'uscore-6.1.0': ['id', 'status', 'intent', 'category', 'subject', 'description'],
+    'carin-0.1.0': ['id', 'status', 'intent', 'subject'],
+    'carin-2.0.0': ['id', 'status', 'intent', 'subject']
+  },
     Organization: {
       'fhir-r4': ['id', 'name', 'address', 'phone', 'email'],
       'uscore-3.1.0': ['id', 'name', 'address', 'phone'],
@@ -102,10 +132,6 @@ const FHIRCreator = () => {
       'uscore-3.1.0': ['id', 'status', 'code', 'subject', 'effectiveDate', 'valueQuantity', 'valueCode'],
       'uscore-3.1.1': ['id', 'status', 'code', 'subject', 'effectiveDate', 'valueQuantity', 'valueCode'],
       'uscore-6.1.0': ['id', 'status', 'code', 'subject', 'effectiveDate', 'valueQuantity', 'valueCode'],
-      'carin-0.1.0': ['id', 'status', 'code', 'subject'],
-      'carin-2.0.0': ['id', 'status', 'code', 'subject'],
-      'davinci-0.1.0': ['id', 'status', 'code', 'subject'],
-      'davinci-2.1.0': ['id', 'status', 'code', 'subject']
     },
     Condition: {
       'fhir-r4': ['id', 'clinicalStatus', 'code', 'subject', 'onsetDate'],
@@ -217,7 +243,11 @@ const FHIRCreator = () => {
     occurrenceDate: 'Occurrence Date',
     created: 'Created Date',
     provider: 'Provider ID',
-    insurer: 'Insurer ID'
+    insurer: 'Insurer ID',
+    patient: 'Patient (ID)',
+    relationship: 'Relationship (e.g., spouse, parent, child)',
+    category: 'Category Code',
+    description: 'CarePlan Description'
   };
 
   const generateFHIRJson = () => {
@@ -287,6 +317,34 @@ const FHIRCreator = () => {
       case 'subject':
       case 'patient':
         resource[field === 'patient' ? 'patient' : 'subject'] = { reference: `Patient/${value}` };
+        break;
+        case 'relationship':
+        resource.relationship = [
+          {
+            coding: [
+              {
+                system: 'http://terminology.hl7.org/CodeSystem/v3-RoleCode',
+                code: value
+              }
+            ],
+            text: value
+          }
+        ];
+        break;
+      case 'category':
+        resource.category = [
+          {
+            coding: [
+              {
+                system: 'http://hl7.org/fhir/us/core/CodeSystem/careplan-category',
+                code: value || 'assess-plan'
+              }
+            ]
+          }
+        ];
+        break;
+      case 'description':
+        resource.description = value;
         break;
       case 'practitioner':
         resource.practitioner = { reference: `Practitioner/${value}` };
@@ -405,16 +463,19 @@ const FHIRCreator = () => {
     document.body.removeChild(element);
   };
 
-  const handleResourceChange = (e) => {
-    setSelectedResource(e.target.value);
-    setFormData({});
-    setJsonOutput('');
-  };
+  // ✅ NEW UPDATED VERSION:
+const handleProfileChange = (e) => {
+  const newProfile = e.target.value;
+  setSelectedProfile(newProfile);
+  setFormData({});
 
-  const handleProfileChange = (e) => {
-    setSelectedProfile(e.target.value);
-    setFormData({});
-  };
+  // Check if current resource is valid for the newly selected profile
+  const allowed = PROFILE_RESOURCES[newProfile] || [];
+  if (!allowed.includes(selectedResource)) {
+    // Automatically reset selected resource to the first valid one
+    setSelectedResource(allowed[0]);
+  }
+};
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
@@ -422,6 +483,11 @@ const FHIRCreator = () => {
       [field]: value
     }));
   };
+  const handleResourceChange = (e) => {
+  setSelectedResource(e.target.value);
+  setFormData({});
+  setJsonOutput('');
+};
 
   const currentFields = resourceFields[selectedResource]?.[selectedProfile] || [];
 
@@ -437,17 +503,23 @@ const FHIRCreator = () => {
           <h2>Configuration</h2>
           
           <div style={styles.formGroup}>
-            <label style={styles.label}>Resource Type</label>
-            <select 
-              value={selectedResource} 
-              onChange={handleResourceChange}
-              style={styles.select}
-            >
-              {resourceTypes.map(type => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-          </div>
+  <label style={styles.label}>Resource Type</label>
+  <select 
+    value={selectedResource} 
+    onChange={handleResourceChange}
+    style={styles.select}
+  >
+    {resourceTypes.map(type => {
+      // Check whether the resource type is supported by the selected profile
+      const isSupported = PROFILE_RESOURCES[selectedProfile]?.includes(type);
+      return (
+        <option key={type} value={type} disabled={!isSupported}>
+          {type} {!isSupported ? '(Not supported in IG)' : ''}
+        </option>
+      );
+    })}
+  </select>
+</div>
 
           <div style={styles.formGroup}>
             <label style={styles.label}>FHIR Profile</label>
@@ -492,10 +564,22 @@ const FHIRCreator = () => {
                       <option value="draft">Draft</option>
                       <option value="completed">Completed</option>
                     </select>
-                  ) : field === 'birthDate' || field === 'onsetDate' || field === 'period' || field === 'effectiveDate' || field === 'performedDate' || field === 'occurrenceDate' || field === 'issued' || field === 'created' ? (
-                    <input 
-                      type="date" 
+                  ) : field === 'intent' ? (
+                    <select 
                       value={formData[field] || ''} 
+                      onChange={(e) => handleInputChange(field, e.target.value)}
+                      style={styles.input}
+                    >
+                      <option value="">Select...</option>
+                      <option value="proposal">Proposal</option>
+                      <option value="plan">Plan</option>
+                      <option value="order">Order</option>
+                      <option value="option">Option</option>
+                    </select>
+                  ) : field === 'note' || field === 'dosageInstruction' || field === 'conclusion' || field === 'description' === 'birthDate' || field === 'onsetDate' || field === 'period' || field === 'effectiveDate' || field === 'performedDate' || field === 'occurrenceDate' ? (
+                    <input 
+                      type="date"
+                      value={formData[field] || ''}
                       onChange={(e) => handleInputChange(field, e.target.value)}
                       style={styles.input}
                     />
